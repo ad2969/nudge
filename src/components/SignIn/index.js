@@ -51,6 +51,7 @@ class SignInFormBase extends React.Component {
       return
     }
     const { email, password } = this.state
+    console.log('submit')
 
     this.props.firebase
       .doSignInWithEmailAndPassword(email, password)
@@ -73,7 +74,7 @@ class SignInFormBase extends React.Component {
     const { email, password, error } = this.state
 
     return (
-      <form onSubmit={this.onSubmit} style={{paddingTop: "8vh"}}>
+      <form style={{paddingTop: "8vh"}}>
         <h3 className="t--bold t--capitalize" style={{paddingTop: "2rem"}}>{t('email')}</h3>
         <input
           className="input--no-outline"
@@ -81,7 +82,7 @@ class SignInFormBase extends React.Component {
           value={email}
           onChange={this.onChange}
           type="text"
-          style={{borderWidth: 0, touchAction: "none"}}
+          style={{borderWidth: 0, touchAction: "none", width: "100%"}}
         />
         <hr />
         <h3 className="t--bold t--capitalize" style={{paddingTop: "2rem"}}>{t('password')}</h3>
@@ -91,13 +92,13 @@ class SignInFormBase extends React.Component {
           value={password}
           onChange={this.onChange}
           type="password"
-          style={{borderWidth: 0, touchAction: "none"}}
+          style={{borderWidth: 0, touchAction: "none", width: "100%"}}
         />
         <hr />
-        <Button type="submit" className="b--done t--capitalize t--bold"
+        <Button onClick={this.onSubmit} type="submit" className="b--done t--uppercase t--bold"
                 style={{left: "10vw", padding: "1rem", paddingTop: "1rem", paddingBottom: "3rem",
                 fontSize: "1.2rem"}}>
-          {t('LOGIN')}
+          {t('login')}
         </Button>
 
         {error && <p>{error.message}</p>}

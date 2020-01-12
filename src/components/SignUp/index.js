@@ -75,7 +75,7 @@ class SignUpFormBase extends React.Component {
     } = this.state
 
     return (
-      <form onSubmit={this.onSubmit}>
+      <form>
         <h3 className="t--bold t--capitalize" style={{paddingTop: "2rem"}}>{t('email')}</h3>
         <input
           className="input--no-outline"
@@ -83,7 +83,7 @@ class SignUpFormBase extends React.Component {
           value={email}
           onChange={this.onChange}
           type="text"
-          style={{borderWidth: 0, touchAction: "none"}}
+          style={{borderWidth: 0, touchAction: "none", width: "100%"}}
           required
         />
         <hr />
@@ -94,7 +94,7 @@ class SignUpFormBase extends React.Component {
           value={passwordOne}
           onChange={this.onChange}
           type="password"
-          style={{borderWidth: 0, touchAction: "none"}}
+          style={{borderWidth: 0, touchAction: "none", width: "100%"}}
           required
         />
         <hr />
@@ -105,11 +105,11 @@ class SignUpFormBase extends React.Component {
           value={passwordTwo}
           onChange={this.onChange}
           type="password"
-          style={{borderWidth: 0, touchAction: "none"}}
+          style={{borderWidth: 0, touchAction: "none", width: "100%"}}
           required
         />
         <hr />
-        <Button type="submit" className="b--done t--capitalize t--bold"
+        <Button onClick={this.onSubmit} type="submit" className="b--done t--uppercase t--bold"
                 style={{left: "10vw", padding: "1rem", paddingTop: "1rem", paddingBottom: "3rem",
                 fontSize: "1.2rem"}}>
           {t('sign up')}
