@@ -19,10 +19,10 @@ const App = () => {
 
   // Set language if not set yet
 	useEffect(() => {
-    if(!getLanguage) {
-      setLanguage('en');
-      console.log('App language code:', getLanguage());
-    }
+		if(!getLanguage) {
+		setLanguage('en');
+		console.log('App language code:', getLanguage());
+		}
 	});
 
 	return (

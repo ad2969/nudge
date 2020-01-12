@@ -74,7 +74,7 @@ class SignInFormBase extends React.Component {
     const { email, password, error } = this.state
 
     return (
-      <form style={{paddingTop: "8vh"}}>
+      <form style={{paddingTop: "8vh", position: "relative"}}>
         <h3 className="t--bold t--capitalize" style={{paddingTop: "2rem"}}>{t('email')}</h3>
         <input
           className="input--no-outline"
