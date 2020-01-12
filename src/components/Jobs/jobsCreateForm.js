@@ -12,6 +12,8 @@ import Header from 'components/Header'
 
 import * as ROUTES from 'constants/routes'
 
+import axios from 'axios'
+
 class JobsCustomizedCreateForm extends React.Component {
     constructor(props) {
         super(props)
@@ -20,15 +22,23 @@ class JobsCustomizedCreateForm extends React.Component {
             med: '',
             dose: '',
             editTime: false,
-            reminders: []
+            reminders: [],
+            loading: true,
         }
     }
 
     componentDidMount() {
         // get
-        this.setState({
-            reminders: convertToReadable(data)
-        }, () => {console.log('recieved', this.state.reminders)})
+        axios.get(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+            params: {accountid: 1},
+            header: {contentType: 'application/json'}
+        }).then(response => {
+            console.log('recieved', response)
+            this.setState({
+                reminders: convertToReadable(response.data[0].jobs),
+                loading: false,
+            }, () => {console.log('saved', this.state.reminders)})
+        }).catch(err => console.log(err))
     }
 
     setName = e => {
@@ -143,7 +153,7 @@ class JobsCustomizedCreateForm extends React.Component {
                             </div>
                             ))}
                         </Form.Item>
-                            <Button type="primary" htmlType="submit" size="large" className="t--uppercase b--done">{t('add')}</Button>
+                            <Button loading={this.state.loading} type="primary" htmlType="submit" size="large" className="t--uppercase b--done">{this.state.loading ? t('loading') : t('add')}</Button>
                     </Form>
                 </div>
                 </Layout.Content>

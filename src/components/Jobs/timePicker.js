@@ -3,12 +3,13 @@ import { withRouter } from 'react-router-dom'
 import { Layout, TimePicker as TP, Button } from 'antd'
 import * as moment from 'moment'
 import t from 'assets/languages'
+import axios from 'axios'
 
 import Header from 'components/Header'
 
 import * as ROUTES from 'constants/routes'
 
-import { convertToSendable } from 'functions/converts'
+import { convertToReadable, convertToSendable } from 'functions/converts'
 
 class TimePicker extends React.Component {
 
@@ -21,12 +22,30 @@ class TimePicker extends React.Component {
                 days: [0, 0, 0, 0, 0, 0, 0],
                 timestamp: +moment({hour: 0, minute: 0}),
                 all: props.location.state.all,
+                loading: true,
             }
         }
         else {
             this.state = { ...props.location.state }
         }
-        console.log(this.state)
+
+        this.updateTime = this.updateTime.bind(this)
+        this.updateDay = this.updateDay.bind(this)
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    componentDidMount() {
+        // get
+        axios.get(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+            params: {accountid: 1},
+            header: {contentType: 'application/json'}
+        }).then(response => {
+            console.log('recieved', response)
+            this.setState({
+                all: convertToReadable(response.data[0].jobs),
+                loading: false,
+            }, () => {console.log('saved', this.state.all)})
+        }).catch(err => console.log(err))
     }
 
     updateTime(time) {
@@ -37,14 +56,34 @@ class TimePicker extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        var data = this.state.all
-        const { timestamp, days } = this.state
-        data[this.state.index] = {
-            timestamp, days
-        }
-        var result = convertToSendable(data)
-        console.log('sending ', result)
-        this.props.history.push(ROUTES.JOBS + '/create')
+        this.setState({
+            loading: true
+        }, () => {
+            var initial = this.state.all
+            const { timestamp, days } = this.state
+            if(this.state.new) {
+                initial.push({
+                    timestamp, days
+                })
+            } else {
+                initial[this.state.index] = {
+                timestamp, days
+                }
+            }
+            const data = convertToSendable(initial)
+            
+            axios.delete(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+                params: {accountid: 1},
+            }).then(response => {
+                console.log('deleting, result:', response)
+
+                axios.post(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS + '?accountid=1', data
+                ).then(response => {
+                    console.log('sent ', data, ', result:', response)
+                    //this.props.history.push(ROUTES.JOBS + '/create')
+                }).catch(err => console.log(err))
+            })
+        })
     }
 
     updateDay(index) {
@@ -93,9 +132,9 @@ class TimePicker extends React.Component {
                         <span className="forms__line__day" style={{width:"14%"}}>
                             <span className={this.state.days[6] ? "t--circle" : ""} onClick={() => {this.updateDay(6)}}>S</span></span>
                     </div>
-                    <Button type="primary" size="large" className="t--uppercase b--done"
+                    <Button loading={this.state.loading} type="primary" size="large" className="t--uppercase b--done"
                             style={{marginLeft: "10vw"}}
-                            onClick={this.handleSubmit} >{t('done')}</Button>
+                            onClick={this.handleSubmit} >{this.state.loading ? t('loading') : t('done')}</Button>
                 </Layout.Content>
             </Layout>
         )
