@@ -4,6 +4,10 @@
 
 // BASE STYLES
 @import './base/typography';
+@import './base/containers';
+@import './base/ant';
 
 // COMPONENTS
 @import './components/landing';
+@import './components/jobs';
+@import './components/forms';

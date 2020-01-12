@@ -9,7 +9,7 @@ import SignInPage from 'components/SignIn'
 import PasswordForgetPage from 'components/PasswordForget'
 import HomePage from 'components/Home'
 import AccountPage from 'components/Account'
-import { JobList } from 'components/Jobs'
+import Jobs, { JobsCreateForm, TimePicker } from 'components/Jobs'
 
 import * as ROUTES from 'constants/routes'
 import { withAuthentication } from 'Session'
@@ -37,7 +37,11 @@ const App = () => {
 				<Route exact path={ROUTES.PASSWORD_FORGET} component={PasswordForgetPage} />
 				<Route exact path={ROUTES.HOME} component={HomePage} />
 				<Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
-				<Route exact path={ROUTES.JOBS} component={JobList} />
+				<Route exact path={ROUTES.JOBS} component={Jobs} />
+				<Route exact path={ROUTES.JOBS + '/create'} component={JobsCreateForm} />
+				<Route exact path={ROUTES.JOBS + '/create/time'} render={() => <TimePicker isUpdate={false} />} />
+				<Route exact path={ROUTES.JOBS + '/update'} component={JobsCreateForm} />
+				<Route exact path={ROUTES.JOBS + '/update/time'} render={() => <TimePicker isUpdate />} />
 			</div>
 		</Router>
 	);

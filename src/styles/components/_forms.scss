@@ -1,0 +1,54 @@
+.forms {
+    button {
+        float: right;
+        width: 100%;
+        margin: 10% 0;
+    }
+}
+
+.forms__line {
+    max-width: 100vw;
+    display: flex;
+    vertical-align: center;
+    
+    span {
+        margin: 0 5px;
+        min-width: 90px;
+    }
+    
+    input {
+        width: 100%;
+    }
+
+    .forms__line__day {
+        min-width: 30px;
+    }
+
+    .forms__line__time {
+        width: 100%;
+        text-align: right;
+    }
+
+    .forms__line__button {
+        width: 100%;
+        text-align: right;
+        span {
+            display: block;
+        }
+        svg {
+            transform: translateY(25%);
+        }
+    }
+}
+
+.forms__line--narrow {
+    max-width: 80%;
+    margin-left: 10%;
+}
+
+.forms__line--space {
+    margin-top: 30px;
+}
+
+.time-picker {
+}

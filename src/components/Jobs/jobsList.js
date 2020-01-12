@@ -1,5 +1,5 @@
 import React from 'react'
-import { List, Spin } from 'antd'
+import { List } from 'antd'
 
 class JobList extends React.Component {
   constructor() {
@@ -26,7 +26,7 @@ class JobList extends React.Component {
 
   render() {
     return (
-      <div className="job-list">
+      <div className="container--margin">
           <List
             dataSource={this.state.data}
             renderItem={item => (
@@ -35,15 +35,9 @@ class JobList extends React.Component {
                   title={item.componentId}
                   description={item.time}
                 />
-                <div>Content</div>
               </List.Item>
             )}
           >
-            {this.state.loading && this.state.hasMore && (
-              <div className="demo-loading-container">
-                <Spin />
-              </div>
-            )}
           </List>
       </div>
     );
