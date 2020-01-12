@@ -33,3 +33,16 @@
 .t--grey {
   color: grey;
 }
+
+.t--lightgrey {
+  color: lightgrey;
+}
+
+.t--circle {
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  padding-left: 0.7rem;
+  padding-right: 0.7rem;
+  border-radius: 50%;
+
+}

@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { setLanguage, getLanguage } from 'assets/languages'
 
-import Navigation from 'components/Navigation'
 import LandingPage from 'components/Landing'
 import SignUpPage from 'components/SignUp'
 import SignInPage from 'components/SignIn'
@@ -10,6 +9,8 @@ import PasswordForgetPage from 'components/PasswordForget'
 import HomePage from 'components/Home'
 import AccountPage from 'components/Account'
 import Jobs, { JobsCreateForm, TimePicker } from 'components/Jobs'
+
+import Navigation from 'components/Navigation'
 
 import * as ROUTES from 'constants/routes'
 import { withAuthentication } from 'Session'
@@ -27,9 +28,7 @@ const App = () => {
 	return (
 		<Router>
 			<div>
-				<Navigation />
-
-				<hr />
+				<br />
 
 				<Route exact path={ROUTES.LANDING} component={LandingPage} />
 				<Route exact path={ROUTES.SIGN_UP} component={SignUpPage} />
@@ -39,9 +38,9 @@ const App = () => {
 				<Route exact path={ROUTES.ACCOUNT} component={AccountPage} />
 				<Route exact path={ROUTES.JOBS} component={Jobs} />
 				<Route exact path={ROUTES.JOBS + '/create'} component={JobsCreateForm} />
-				<Route exact path={ROUTES.JOBS + '/create/time'} render={() => <TimePicker isUpdate={false} />} />
-				<Route exact path={ROUTES.JOBS + '/update'} component={JobsCreateForm} />
-				<Route exact path={ROUTES.JOBS + '/update/time'} render={() => <TimePicker isUpdate />} />
+				<Route exact path={ROUTES.JOBS + '/create/timeupdate'} component={TimePicker} />
+				<Route exact path={ROUTES.JOBS + '/create/timecreate'} component={TimePicker} />
+				<Route exact path={'/nav'} component={Navigation} />
 			</div>
 		</Router>
 	);

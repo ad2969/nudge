@@ -21,7 +21,9 @@
     }
 
     .forms__line__day {
-        min-width: 30px;
+        min-width: 1rem;
+        width: 10%;
+        text-align: center;
     }
 
     .forms__line__time {
@@ -48,7 +50,4 @@
 
 .forms__line--space {
     margin-top: 30px;
-}
-
-.time-picker {
 }

@@ -2,6 +2,11 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { Layout, Form, Input, Button } from 'antd'
 import t from 'assets/languages'
+import * as moment from 'moment'
+
+import data from 'assets/sampleData'
+
+import { convertToReadable, convertToSendable } from 'functions/converts'
 
 import Header from 'components/Header'
 
@@ -15,7 +20,15 @@ class JobsCustomizedCreateForm extends React.Component {
             med: '',
             dose: '',
             editTime: false,
+            reminders: []
         }
+    }
+
+    componentDidMount() {
+        // get
+        this.setState({
+            reminders: convertToReadable(data)
+        }, () => {console.log('recieved', this.state.reminders)})
     }
 
     setName = e => {
@@ -33,8 +46,27 @@ class JobsCustomizedCreateForm extends React.Component {
 
     handleSubmit = e => {
         e.preventDefault()
-        console.log('submit', this.state)
+        const newData = convertToSendable(this.state.reminders)
+        console.log('sending', newData)
         this.props.history.push(ROUTES.JOBS)
+    }
+
+    handleUpdates = update => {
+        this.setState(prevState => {
+            const reminders = prevState.reminders.map((item, j) => {
+              if (j === update.id) {
+                return  {
+                            days: update.days,
+                            timestamp: update.timestamp
+                        }
+              } else {
+                return item;
+              }
+            });
+            return {
+              reminders,
+            };
+          });
     }
     
     render() {
@@ -77,8 +109,8 @@ class JobsCustomizedCreateForm extends React.Component {
                                         <span><svg width="21" height="21" viewBox="0 0 21 21" fill="none" xmlns="http://www.w3.org/2000/svg"
                                             onClick={() => {
                                                 this.props.history.push({
-                                                    pathname: ROUTES.JOBS + '/update/time',
-                                                    state: { new: true }
+                                                    pathname: ROUTES.JOBS + '/create/timecreate',
+                                                    state: { new: true, all: this.state.reminders, id: this.state.reminders.length }
                                                 })
                                             }}>
                                         <circle cx="10.5" cy="10.5" r="10.5" fill="#E5E5E5"/>
@@ -86,54 +118,32 @@ class JobsCustomizedCreateForm extends React.Component {
                                         </svg></span>
                                     </span>
                             </div>
-                            <div className="forms__line forms__line--narrow t--grey"
+                            {this.state.reminders.map((reminder, index) => (
+                                <div key={reminder.timestamp} className="forms__line forms__line--narrow t--grey"
                                 onClick={() => {
                                     this.props.history.push({
-                                        pathname: ROUTES.JOBS + '/update/time',
+                                        pathname: ROUTES.JOBS + '/create/timeupdate',
                                         state: {
                                             new: false,
-                                            mon: true,
-                                            tue: false,
-                                            wed: true,
-                                            thu: false,
-                                            fri: true,
-                                            sat: false,
-                                            sun: false,
-                                            time: 10,
+                                            id: index,
+                                            days: reminder.days,
+                                            timestamp: reminder.timestamp,
+                                            all: this.state.reminders
                                         }
                                     })
                                 }}>
-                                <span className="forms__line__day">M</span>
-                                <span className="forms__line__day">W</span>
-                                <span className="forms__line__day">F</span>
-                                <span className="forms__line__time">10am</span>
+                                <span key={reminder.timestamp + '0'} className={reminder.days[0] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>S</span>
+                                <span key={reminder.timestamp + '1'} className={reminder.days[1] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>M</span>
+                                <span key={reminder.timestamp + '2'} className={reminder.days[2] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>T</span>
+                                <span key={reminder.timestamp + '3'} className={reminder.days[3] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>W</span>
+                                <span key={reminder.timestamp + '4'} className={reminder.days[4] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>T</span>
+                                <span key={reminder.timestamp + '5'} className={reminder.days[5] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>F</span>
+                                <span key={reminder.timestamp + '6'} className={reminder.days[6] ? "forms__line__day t--bold" : "forms__line__day t--lightgrey"}>S</span>
+                                <span className="forms__line__time">{moment(reminder.timestamp).format('h:mm A')}</span>
                             </div>
-                            <div className="forms__line forms__line--narrow t--grey"
-                                onClick={() => {
-                                    this.props.history.push({
-                                        pathname: ROUTES.JOBS + '/update/time',
-                                        state: {
-                                            new: false,
-                                            mon: true,
-                                            tue: false,
-                                            wed: true,
-                                            thu: false,
-                                            fri: true,
-                                            sat: false,
-                                            sun: false,
-                                            time: 18,
-                                        }
-                                    })
-                                }}>
-                                <span className="forms__line__day">M</span>
-                                <span className="forms__line__day">W</span>
-                                <span className="forms__line__day">F</span>
-                                <span className="forms__line__time">6pm</span>
-                            </div>
+                            ))}
                         </Form.Item>
-                        <Form.Item>
-                            <Button type="primary" htmlType="submit" size="large" className="t--uppercase">{t('save')}</Button>
-                        </Form.Item>
+                            <Button type="primary" htmlType="submit" size="large" className="t--uppercase b--done">{t('add')}</Button>
                     </Form>
                 </div>
                 </Layout.Content>

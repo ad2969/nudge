@@ -10,3 +10,12 @@
 .container--margin-top {
     margin: 0 10vh;
 }
+
+.hidden--active {
+    opacity: 0;
+    transition: all 1s;
+}
+.hidden--show {
+    opacity: 1;
+    transition: all 1s;
+}
