@@ -29,7 +29,7 @@ class JobsCustomizedCreateForm extends React.Component {
 
     componentDidMount() {
         // get
-        axios.get(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+        axios.get('https://cors-anywhere.herokuapp.com/' + 'https://pharm-backend.azurewebsites.net/jobs', {
             params: {accountid: 1},
             header: {contentType: 'application/json'}
         }).then(response => {

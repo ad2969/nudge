@@ -36,7 +36,7 @@ class TimePicker extends React.Component {
 
     componentDidMount() {
         // get
-        axios.get(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+        axios.get('https://cors-anywhere.herokuapp.com/' + 'https://pharm-backend.azurewebsites.net/jobs', {
             params: {accountid: 1},
             header: {contentType: 'application/json'}
         }).then(response => {
@@ -72,12 +72,12 @@ class TimePicker extends React.Component {
             }
             const data = convertToSendable(initial)
             
-            axios.delete(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS, {
+            axios.delete('https://cors-anywhere.herokuapp.com/' + 'https://pharm-backend.azurewebsites.net/jobs', {
                 params: {accountid: 1},
             }).then(response => {
                 console.log('deleting, result:', response)
 
-                axios.post(process.env.REACT_APP_PROXY_URL + process.env.REACT_APP_API_JOBS + '?accountid=1', data
+                axios.post('https://cors-anywhere.herokuapp.com/' + 'https://pharm-backend.azurewebsites.net/jobs' + '?accountid=1', data
                 ).then(response => {
                     console.log('sent ', data, ', result:', response)
                     //this.props.history.push(ROUTES.JOBS + '/create')
