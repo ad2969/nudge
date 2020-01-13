@@ -25,7 +25,7 @@ class HomePage extends React.Component {
                 </Layout.Header>
                 <Layout.Content>
                     <br />
-                    <div className="container--margin" style={{overflowY: "scroll", overflowX: "hidden"}}>
+                    <div className="container--margin" style={{overflowY: "scroll"}}>
                         <Card bordered={false} style={{height: "25vh"}} >
                             <Card.Meta
                             avatar={<Avatar src="https://images.unsplash.com/photo-1565481454267-290bf20575a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=668&q=80" />}

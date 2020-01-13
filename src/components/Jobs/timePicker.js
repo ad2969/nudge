@@ -3,13 +3,12 @@ import { withRouter } from 'react-router-dom'
 import { Layout, TimePicker as TP, Button } from 'antd'
 import * as moment from 'moment'
 import t from 'assets/languages'
-import axios from 'axios'
 
 import Header from 'components/Header'
 
 import * as ROUTES from 'constants/routes'
 
-import { convertToReadable, convertToSendable } from 'functions/converts'
+import { convertToSendable } from 'functions/converts'
 
 class TimePicker extends React.Component {
 
@@ -22,12 +21,12 @@ class TimePicker extends React.Component {
                 days: [0, 0, 0, 0, 0, 0, 0],
                 timestamp: +moment({hour: 0, minute: 0}),
                 all: props.location.state.all,
-                loading: true,
             }
         }
         else {
             this.state = { ...props.location.state }
         }
+<<<<<<< HEAD
 
         this.updateTime = this.updateTime.bind(this)
         this.updateDay = this.updateDay.bind(this)
@@ -46,6 +45,9 @@ class TimePicker extends React.Component {
                 loading: false,
             }, () => {console.log('saved', this.state.all)})
         }).catch(err => console.log(err))
+=======
+        console.log(this.state)
+>>>>>>> parent of 0432aa2... api
     }
 
     updateTime(time) {
@@ -80,7 +82,7 @@ class TimePicker extends React.Component {
                 axios.post('https://cors-anywhere.herokuapp.com/' + 'https://pharm-backend.azurewebsites.net/jobs' + '?accountid=1', data
                 ).then(response => {
                     console.log('sent ', data, ', result:', response)
-                    //this.props.history.push(ROUTES.JOBS + '/create')
+                    this.props.history.push(ROUTES.JOBS + '/create')
                 }).catch(err => console.log(err))
             })
         })
@@ -132,9 +134,9 @@ class TimePicker extends React.Component {
                         <span className="forms__line__day" style={{width:"14%"}}>
                             <span className={this.state.days[6] ? "t--circle" : ""} onClick={() => {this.updateDay(6)}}>S</span></span>
                     </div>
-                    <Button loading={this.state.loading} type="primary" size="large" className="t--uppercase b--done"
+                    <Button type="primary" size="large" className="t--uppercase b--done"
                             style={{marginLeft: "10vw"}}
-                            onClick={this.handleSubmit} >{this.state.loading ? t('loading') : t('done')}</Button>
+                            onClick={this.handleSubmit} >{t('done')}</Button>
                 </Layout.Content>
             </Layout>
         )

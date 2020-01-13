@@ -12,8 +12,6 @@ import Header from 'components/Header'
 
 import * as ROUTES from 'constants/routes'
 
-import axios from 'axios'
-
 class JobsCustomizedCreateForm extends React.Component {
     constructor(props) {
         super(props)
@@ -22,8 +20,7 @@ class JobsCustomizedCreateForm extends React.Component {
             med: '',
             dose: '',
             editTime: false,
-            reminders: [],
-            loading: true,
+            reminders: []
         }
     }
 
@@ -153,7 +150,7 @@ class JobsCustomizedCreateForm extends React.Component {
                             </div>
                             ))}
                         </Form.Item>
-                            <Button loading={this.state.loading} type="primary" htmlType="submit" size="large" className="t--uppercase b--done">{this.state.loading ? t('loading') : t('add')}</Button>
+                            <Button type="primary" htmlType="submit" size="large" className="t--uppercase b--done">{t('add')}</Button>
                     </Form>
                 </div>
                 </Layout.Content>
